@@ -17,9 +17,9 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <main className="flex flex-col items-center justify-center min-h-screen p-4">
+      <main className="flex flex-col items-center min-h-screen p-4">
         <ModeToggle className="absolute right-4 top-4" />
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        <h1 className="self-start scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Log Viewer
         </h1>
 
