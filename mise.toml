@@ -3,3 +3,5 @@ pnpm = "10.8.1"
 
 [tasks]
 dev = "pnpm tauri dev"
+test = { dir = "{{ config_root }}/src-tauri", run = ["cargo test"] }
+logClient = "nc 127.0.0.1 54560"

@@ -1,6 +1,27 @@
-# Tauri + React + Typescript
+# Rex Log Viewer
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+## Logback configuration
+
+```xml
+<configuration>
+
+    <appender name="SOCKET" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+      <destination>127.0.0.1:54560</destination>
+      <reconnectionDelay>1 second</reconnectionDelay>
+      <includeCallerData>${includeCallerData}</includeCallerData>
+      <connectionTimeout>5 seconds</connectionTimeout>
+      <writeBufferSize>8192</writeBufferSize>
+
+      <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        <customFields>{"service":"${service.name}","version":"${service.version}"}</customFields>
+        </encoder>
+  </appender>
+
+  <root level="DEBUG">
+    <appender-ref ref="SOCKET"/>
+  </root>
+</configuration>
+```
 
 ## Recommended IDE Setup
 

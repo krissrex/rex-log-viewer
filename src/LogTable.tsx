@@ -7,26 +7,76 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { invoke } from "@tauri-apps/api/core";
+import { useEffect, useState } from "react";
+import { ScrollArea } from "./components/ui/scroll-area";
+import LogDetails from "./LogDetails";
 
 export default function LogTable() {
+  const [logBuffer, setLogBuffer] = useState("");
+
+  // Fetch log buffer every second
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        setLogBuffer(await invoke("get_log_buffer", {}));
+      } catch (error) {
+        console.error("Failed to get log buffer:", error);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Table>
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead>Details</TableHead>
+          <TableHead className="w-[100px]">Time</TableHead>
+          <TableHead>Message</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">INV001</TableCell>
-          <TableCell>Paid</TableCell>
-          <TableCell>Credit Card</TableCell>
-          <TableCell className="text-right">$250.00</TableCell>
-        </TableRow>
+        {logBuffer.split("\n").map((log) => {
+          try {
+            const msg = JSON.parse(log);
+
+            /*
+            - ERROR: 40000
+            - WARN: 30000
+            - INFO: 20000
+            - DEBUG: 10000
+            - TRACE: 0
+            */
+            const level = msg["level_value"];
+            const levelColor =
+              level >= 40000 ? "red" : level >= 30000 ? "orange" : "black";
+
+            return (
+              <TableRow style={{ borderColor: levelColor }}>
+                <TableCell>
+                  <LogDetails className="" log={log} />
+                </TableCell>
+                <TableCell className="text-right font-normal">
+                  <span style={{ color: levelColor }}>{msg["@timestamp"]}</span>
+                </TableCell>
+                <TableCell className="font-medium">{msg["message"]}</TableCell>
+              </TableRow>
+            );
+          } catch {
+            return (
+              <TableRow>
+                <TableCell>
+                  <LogDetails log={log} />
+                </TableCell>
+                <TableCell></TableCell>
+                <TableCell>{log}</TableCell>
+              </TableRow>
+            );
+          }
+        })}
       </TableBody>
     </Table>
   );

@@ -8,7 +8,7 @@ static LOG_BUFFER: once_cell::sync::Lazy<Arc<Mutex<String>>> =
     once_cell::sync::Lazy::new(|| Arc::new(Mutex::new(String::with_capacity(1_000_000))));
 
 fn handle_client(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
+    let mut buffer = [0; 8192];
     while match stream.read(&mut buffer) {
         Ok(size) if size > 0 => {
             println!("Received {size} data");
@@ -39,9 +39,16 @@ fn handle_client(mut stream: TcpStream) {
 
 // Define a struct to return both the sender and thread handle
 pub struct TcpServer {
-    stop: std::sync::mpsc::Sender<()>,
-    thread: std::thread::JoinHandle<()>,
+    pub stop: std::sync::mpsc::Sender<()>,
+    pub thread: std::thread::JoinHandle<()>,
 }
+
+// impl TcpServer {
+//     fn stop_and_wait(self) {
+//         self.stop.send(()).unwrap();
+//         self.thread.join().unwrap();
+//     }
+// }
 
 pub fn start_tcp_server() -> TcpServer {
     const PORT: u16 = 54560;
@@ -159,7 +166,7 @@ mod tests {
         let old_hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(move |panic_info| {
             eprintln!("Test panicked: {}", panic_info);
-            let _ = server.stop.send(()).unwrap();
+            server.stop.send(()).unwrap();
             old_hook(panic_info);
         }));
 

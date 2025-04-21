@@ -2,7 +2,6 @@ import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Input } from "@/components/ui/input";
 import LogTable from "./LogTable";
-import LogDetails from "./LogDetails";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 
@@ -22,7 +21,6 @@ function App() {
         <h1 className="self-start scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Log Viewer
         </h1>
-
         <form
           className="row"
           onSubmit={(e) => {
@@ -43,9 +41,7 @@ function App() {
           />
         </form>
         <p>{greetMsg}</p>
-
         <LogTable />
-        <LogDetails />
       </main>
     </ThemeProvider>
   );

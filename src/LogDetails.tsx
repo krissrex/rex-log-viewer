@@ -6,16 +6,41 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useMemo } from "react";
+import { ScrollArea } from "./components/ui/scroll-area";
+import { cn } from "./lib/utils";
 
-export default function LogDetails() {
+interface LogDetailsProps {
+  log?: string;
+  className?: string;
+}
+
+export default function LogDetails({ log = "", className }: LogDetailsProps) {
+  const logJson = useMemo(() => {
+    try {
+      return JSON.parse(log);
+    } catch {
+      return {};
+    }
+  }, [log]);
+
   return (
     <Sheet>
-      <SheetTrigger>Open Details</SheetTrigger>
-      <SheetContent>
+      <SheetTrigger className={cn("cursor-pointer", className)}>
+        View
+      </SheetTrigger>
+      <SheetContent className="w-full max-w-full">
         <SheetHeader>
-          <SheetTitle>Log Details</SheetTitle>
+          <SheetTitle>View</SheetTitle>
           <SheetDescription>
-            This is a description of the log details.
+            <table className="">
+              {Object.entries(logJson).map(([key, val]) => (
+                <tr className="border-1" key={key}>
+                  <td className="pr-2">{key}:</td>{" "}
+                  <td className="pl-2">{val}</td>
+                </tr>
+              ))}
+            </table>
           </SheetDescription>
         </SheetHeader>
       </SheetContent>
