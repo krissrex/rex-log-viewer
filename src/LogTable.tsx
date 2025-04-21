@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/table";
 import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useState } from "react";
-import { ScrollArea } from "./components/ui/scroll-area";
 import LogDetails from "./LogDetails";
 
 export default function LogTable() {

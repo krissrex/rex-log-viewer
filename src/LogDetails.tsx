@@ -7,7 +7,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useMemo } from "react";
-import { ScrollArea } from "./components/ui/scroll-area";
 import { cn } from "./lib/utils";
 
 interface LogDetailsProps {
@@ -37,7 +36,7 @@ export default function LogDetails({ log = "", className }: LogDetailsProps) {
               {Object.entries(logJson).map(([key, val]) => (
                 <tr className="border-1" key={key}>
                   <td className="pr-2">{key}:</td>{" "}
-                  <td className="pl-2">{val}</td>
+                  <td className="pl-2">{String(val)}</td>
                 </tr>
               ))}
             </table>
