@@ -1,2 +1,5 @@
 [tools]
 pnpm = "10.8.1"
+
+[tasks]
+dev = "pnpm tauri dev"
