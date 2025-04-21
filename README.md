@@ -1,5 +1,9 @@
 # Rex Log Viewer
 
+<img src="docs/main-view.png" alt="Main view" width="400px"/>
+
+<img src="docs/details-view.png" alt="Details view" width="400px"/>
+
 ## Logback configuration
 
 ```xml
