@@ -51,7 +51,7 @@ export default function LogTable() {
             */
             const level = msg["level_value"];
             const levelColor =
-              level >= 40000 ? "red" : level >= 30000 ? "orange" : "black";
+              level >= 40000 ? "red" : level >= 30000 ? "orange" : undefined;
 
             return (
               <TableRow style={{ borderColor: levelColor }}>
