@@ -29,7 +29,7 @@ export default function LogTable() {
 
   return (
     <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableCaption>Logs can be sent to 127.0.0.1:54560</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Details</TableHead>
