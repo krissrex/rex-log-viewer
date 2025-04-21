@@ -1,4 +1,6 @@
 # Rex Log Viewer
+> [!WARNING]
+> This is just a proof of concept.
 
 <img src="docs/main-view.png" alt="Main view" width="400px"/>
 
@@ -26,6 +28,19 @@
   </root>
 </configuration>
 ```
+
+## Contributing
+
+This uses the following tools
+* mise
+* rust / cargo
+* pnpm
+
+And this stack
+* Tauri
+* Vite
+* React 19
+* Tailwind 4
 
 ## Recommended IDE Setup
 
